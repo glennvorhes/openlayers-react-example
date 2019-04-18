@@ -19,8 +19,16 @@ import {example_data} from './example_data';
 
 import GeoJSON from 'ol/format/GeoJSON';
 
+//outer reference to vectorLayer
 let vectorLayer: VectorLayer = null;
 
+
+/**
+ * watch for changes to the store and write to the console.
+ * This part is for debugging purposes.
+ * Also, trigger a refresh of the vector layer.  If this wasn't done, the symbol colors
+ * would only change after a user pans or zooms on the map
+ */
 store.subscribe(() => {
     if (vectorLayer){
         vectorLayer.getSource().refresh();
@@ -28,12 +36,23 @@ store.subscribe(() => {
     console.log(getState());
 });
 
+/**
+ * Main entry point of the application
+ */
 class App extends React.Component<{}, {}> {
 
     constructor(props, context) {
         super(props, context);
     }
 
+    /**
+     * function called after the component mounted.
+     * The React.Component class has this method but it doesn't do anything
+     * unless the function is overridden in the derived class
+     *
+     * Order of operations is important.  The OpenLayers map is created in a div with id="map"
+     * However, that div only exists in after the App component is rendered as described in the render method.
+     */
     componentDidMount() {
         let map = new Map({
             target: 'map',
@@ -88,6 +107,11 @@ class App extends React.Component<{}, {}> {
         </div>
     }
 }
+
+/**
+ * Render the main compoent of the application.  The Provider element is how  React maintains a reference to the
+ * store and updates connected components as changes are made to the store.
+ */
 
 
 ReactDom.render(<Provider store={store}><App/></Provider>, document.getElementById('root'));
