@@ -11,7 +11,8 @@ cd to a directory where the project will exist locally
 git clone https://github.com/glennvorhes/openlayers-react-example.git
 ```
 
-Open the project in your IDE
+Open the project in your IDE and run the following.  Alternatively, cd
+to the project directory to run.
 
 ```
 npm install
